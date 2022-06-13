@@ -144,7 +144,7 @@ func renderServiceRoutes(service spec.Service, groups []spec.Group, paths swagge
 				for _, member := range defineStruct.Members {
 					if member.Name == "" {
 						memberDefineStruct, _ := member.Type.(spec.DefineStruct)
-						for _,m:=range memberDefineStruct.Members{
+						for _, m := range memberDefineStruct.Members {
 							if strings.Contains(m.Tag, "header") {
 								tempKind := swaggerMapTypes[strings.Replace(m.Type.Name(), "[]", "", -1)]
 
@@ -380,16 +380,16 @@ func renderReplyAsDefinition(d swaggerDefinitionsObject, m messageMap, p []spec.
 			if tag, err := member.GetPropertyName(); err == nil {
 				kv.Key = tag
 			}
-			if kv.Key == ""{
-				memberStruct ,_ := member.Type.(spec.DefineStruct)
-				for _,  m:=range memberStruct.Members{
+			if kv.Key == "" {
+				memberStruct, _ := member.Type.(spec.DefineStruct)
+				for _, m := range memberStruct.Members {
 					if strings.Contains(m.Tag, "header") {
 						continue
 					}
 
 					mkv := keyVal{
-						Value:schemaOfField(m),
-						Key: m.Name,
+						Value: schemaOfField(m),
+						Key:   m.Name,
 					}
 
 					if tag, err := m.GetPropertyName(); err == nil {
